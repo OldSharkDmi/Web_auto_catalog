@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
@@ -9,32 +9,32 @@
       <div class="col-md-2"></div>
       <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
         <div class="justify-content-center">
-          <h1>Model Details</h1>
+          <h1>Детали модели</h1>
         </div>
         <div class="row bg-light rounded">
           <div class="col-md-6">
-            <h2>Model</h2>
-            <h4 th:text="'Brand: ' + ${modelDetails.brand}"></h4>
-            <h4 th:text="'Name: ' + ${modelDetails.name}"></h4>
-            <h4 th:text="'Category: ' + ${modelDetails.categoryEnum}"></h4>
-            <h4 th:text="'Image URL: ' + ${modelDetails.imageURL}"></h4>
-            <h4 th:text="'Start year: ' + ${modelDetails.startYear}"></h4>
-            <h4 th:text="'End year: ' + ${modelDetails.endYear}"></h4>
-            <h4 th:text="'Created: ' + ${modelDetails.created}"></h4>
+            <h2>Модель</h2>
+            <h4 th:text="'Бренд: ' + ${modelDetails.brand}"></h4>
+            <h4 th:text="'Имя: ' + ${modelDetails.name}"></h4>
+            <h4 th:text="'Категория: ' + ${modelDetails.categoryEnum}"></h4>
+            <h4 th:text="'Год начала: ' + ${modelDetails.startYear}"></h4>
+            <h4 th:text="'Год окончания: ' + ${modelDetails.endYear}"></h4>
+            <h4 th:text="'Создано: ' + ${modelDetails.created}"></h4>
             <div th:if="${modelDetails.modified != null}">
-              <h4 th:text="'Modified: ' + ${modelDetails.modified}"></h4>
+              <h4 th:text="'Изменено: ' + ${modelDetails.modified}"></h4>
             </div>
             <div class="align-bottom">
               <a class="btn btn-danger align-bottom"
-                 th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Delete
-                Model</a>
+                 th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Удалить модель</a>
             </div>
             <div style="padding-top: 20px"></div>
             <div class="align-bottom">
-              <a class="btn btn-warning align-bottom" th:href="@{/models/model-edit/{model-name}(model-name=${modelDetails.name})}">Edit Model</a>
+              <a class="btn btn-warning align-bottom" th:href="@{/models/model-edit/{model-name}(model-name=${modelDetails.name})}">Редактировать модель</a>
             </div>
           </div>
-          <div class="col-md-6"><img src="/pic/2114.png" height="350px"></div>
+          <div class="col-md-6">
+            <img th:if="${modelDetails.imageURL}" th:src="${modelDetails.imageURL}" alt="Изображение модели" class="img-fluid ml-3" style="max-width: 600px; max-height: 400px;">
+          </div>
         </div>
       </main>
     </div>

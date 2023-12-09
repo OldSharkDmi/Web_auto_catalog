@@ -46,7 +46,7 @@
                     <h2 class="mt-4">Топ 3 самых дешевых заказов</h2>
                     <ul th:each="offer : ${topOffers}">
                         <div class="border rounded p-3 mb-3 square-container mx-auto text-center"> <!-- mx-auto и text-center для центрирования -->
-                            <h4 style="font-family: 'Roboto', sans-serif;"> 
+                            <h4 style="font-family: 'Roboto', sans-serif;">
                                 <a class="btn-block" th:href="@{/offers/offer-details/{id}(id = ${offer.id})}">
                                     <span class="font-weight-bold" th:text="${offer.model.name}"></span> -
                                     <span class="font-italic" th:text="${offer.price}"></span>&#8381;

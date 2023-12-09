@@ -8,9 +8,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.rutmiit.dto.AddOfferDto;
+import ru.rutmiit.dto.ShowOfferInfoDto;
 import ru.rutmiit.services.ModelService;
 import ru.rutmiit.services.OfferService;
 import ru.rutmiit.services.UserService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/offers")
@@ -51,12 +54,13 @@ public class OfferController {
         return "redirect:/";
     }
 
+
     @GetMapping("/all")
     public String showAllOffers(Model model) {
         model.addAttribute("offerInfos", offerService.getAll());
-
         return "offer-all";
     }
+
 
     @GetMapping("/offer-details/{offer-id}")
     public String OfferDetails(@PathVariable("offer-id") String id, Model model) {
@@ -71,4 +75,34 @@ public class OfferController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/all-sorted")
+    public String showAllOffers(Model model, @RequestParam(required = false) String sortByPrice) {
+        List<ShowOfferInfoDto> offerInfos;
+
+        if ("asc".equals(sortByPrice) || "desc".equals(sortByPrice)) {
+            offerInfos = offerService.getAllSortedByPrice(sortByPrice);
+        } else {
+            offerInfos = offerService.getAll();
+        }
+
+        model.addAttribute("offerInfos", offerInfos);
+        return "offer-all";
+    }
+    @GetMapping("/all-sortedbyDate")
+    public String showAllOffersbyDate(Model model, @RequestParam(required = false) String sortBy) {
+        List<ShowOfferInfoDto> offerInfos;
+
+        if ("asc".equals(sortBy) || "desc".equals(sortBy)) {
+            offerInfos = offerService.getAllSortedByDate(sortBy);
+        } else {
+            offerInfos = offerService.getAll();
+        }
+
+        model.addAttribute("offerInfos", offerInfos);
+        return "offer-all";
+    }
+
+
+
 }

@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="fragments/navbar">Панель навигации</div>
 <main class="flex-shrink-0">
     <div class="container">
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-                <h2 class="text-center text-dark mt-5">Offer Details</h2>
-                    <h2 th:text="'Model: ' + ${offerDetails.model}"></h2>
-                    <h2 th:text="'User: ' + ${offerDetails.users}"></h2>
-                    <h2 th:text="'Description: ' + ${offerDetails.description}"></h2>
-                    <h2 th:text="'Engine Type: ' + ${offerDetails.engineEnum}"></h2>
-                    <h2 th:text="'Image URL: ' + ${offerDetails.imageUrl}"></h2>
-                    <h2 th:text="'Mileage: ' + ${offerDetails.mileage}"></h2>
-                    <h2 th:text="'Price: ' + ${offerDetails.price}"></h2>
-                    <h2 th:text="'Transmission type: ' + ${offerDetails.transmissionEnum}"></h2>
-                    <h2 th:text="'Year: ' + ${offerDetails.year}"></h2>
-                    <h2 th:text="'Seller: ' + ${offerDetails.seller}"></h2>
-                    <h2 th:text="'Created: ' + ${offerDetails.created}"></h2>
-                    <h4><a class="btn btn-danger align-bottom"
-                           th:href="@{/offers/offer-delete/{offer-name}(offer-name=${offerDetails.id})}">Delete
-                        Offer</a></h4>
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h2 class="card-title text-center text-dark">Информация о предложении</h2>
+                                <h2 th:text="'Модель: ' + ${offerDetails.model}"></h2>
+                                <h2 th:text="'Пользователь: ' + ${offerDetails.users}"></h2>
+                                <h2 th:text="'Описание: ' + ${offerDetails.description}"></h2>
+                                <h2 th:text="'Тип двигателя: ' + ${offerDetails.engineEnum}"></h2>
+                                <h2 th:text="'Пробег: ' + ${offerDetails.mileage}"></h2>
+                                <h2 th:text="'Цена: ' + ${offerDetails.price}"></h2>
+                                <h2 th:text="'Тип трансмиссии: ' + ${offerDetails.transmissionEnum}"></h2>
+                                <h2 th:text="'Год: ' + ${offerDetails.year}"></h2>
+                                <h2 th:text="'Продавец: ' + ${offerDetails.seller}"></h2>
+                                <h2 th:text="'Создано: ' + ${offerDetails.created}"></h2>
+                                <h4><a class="btn btn-danger align-bottom"
+                                       th:href="@{/offers/offer-delete/{offer-name}(offer-name=${offerDetails.id})}">Удалить предложение</a></h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="#" th:src="${offerDetails.imageUrl}" class="img-fluid rounded-start" alt="Image">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

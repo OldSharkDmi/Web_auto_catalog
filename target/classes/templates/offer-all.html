@@ -9,8 +9,19 @@
             <div class="col-md-2"></div>
             <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
                 <h2 class="display-4 text-center text-dark mt-5">Все предложения</h2>
-                <div th:each="o : ${offerInfos}" class="d-flex flex-column bg-text mb-3 border border-secondary rounded p-3">
 
+                <!-- Ссылки для сортировки по цене -->
+                <div class="text-right mb-3">
+                    <a class="btn btn-link" th:href="@{/offers/all-sorted(sortByPrice='asc')}">Сортировать по цене (по возрастанию)</a>
+                    <a class="btn btn-link" th:href="@{/offers/all-sorted(sortByPrice='desc')}">Сортировать по цене (по убыванию)</a>
+                    <a class="btn btn-link" th:href="@{/offers/all}">Сортировать по Популярности</a>
+                    <a class="btn btn-link" th:href="@{/offers/all-sortedbyDate(sortBy='asc')}">Сортировать по дате (Старее)</a>
+                    <a class="btn btn-link" th:href="@{/offers/all-sortedbyDate(sortBy='desc')}">Сортировать по дате (Новее)</a>
+
+
+                </div>
+
+                <div th:each="o : ${offerInfos}" class="d-flex flex-column bg-text mb-3 border border-secondary rounded p-3">
                     <div class="d-flex flex-content bg-text mb-3">
                         <h2 th:text="'Бренд: '"></h2>
                         <h4><a class="btn-block" th:href="@{/brands/brand-details/{id}(id = ${o.model.brand})}" th:text="${o.model.brand}"></a></h4>
@@ -20,7 +31,7 @@
                         <h2 th:text="'Модель: '"></h2>
                         <h4><a class="btn-block" th:href="@{/models/model-details/{id}(id = ${o.model.name})}" th:text="${o.model.name}"></a></h4>
                     </div>
-<!--                    <h2 th:text="'Модель: ' + ${o.model.name}"></h2>-->
+
                     <h2 th:text="'Пользователь: ' + ${o.users}"></h2>
                     <h2 th:text="'Цена: ' + ${o.price}"></h2>
                     <h2 th:text="'Год: ' + ${o.year}"></h2>

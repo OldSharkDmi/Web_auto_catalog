@@ -12,6 +12,8 @@ import ru.rutmiit.repositories.ModelRepository;
 import ru.rutmiit.repositories.OfferRepository;
 import ru.rutmiit.repositories.UserRepository;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,6 +62,31 @@ public class OfferService {
     public List<Offer> getTop3CheapestOffers() {
         // Здесь вызывайте метод репозитория для получения топ 3 заказов
         return offerRepository.findTop3ByOrderByPrice();
+    }
+
+    public List<ShowOfferInfoDto> getAllSortedByPrice(String sortOrder) {
+        List<Offer> offers = offerRepository.findAll();
+
+        if ("asc".equals(sortOrder)) {
+            Collections.sort(offers, (o1, o2) -> Double.compare(o1.getPrice(), o2.getPrice()));
+        } else {
+            Collections.sort(offers, (o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
+        }
+
+        return offers.stream().map(offer -> modelMapper.map(offer, ShowOfferInfoDto.class)).collect(Collectors.toList());
+    }
+    public List<ShowOfferInfoDto> getAllSortedByDate(String sortOrder) {
+        List<Offer> offers = offerRepository.findAll();
+
+        if ("asc".equals(sortOrder)) {
+            Collections.sort(offers, Comparator.comparing(Offer::getCreated));
+        } else {
+            Collections.sort(offers, Comparator.comparing(Offer::getCreated).reversed());
+        }
+
+        return offers.stream()
+                .map(offer -> modelMapper.map(offer, ShowOfferInfoDto.class))
+                .collect(Collectors.toList());
     }
 
 //    public AddOfferDto update(AddOfferDto offer) {

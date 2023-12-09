@@ -4,13 +4,22 @@ package ru.rutmiit.dto;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ShowDetailedBrandInfoDto {
     private String name;
     private LocalDate created;
     private AddModelDto model;
-
+    private List<AddModelDto> models;
     private LocalDate modified;
+
+    public List<AddModelDto> getModels() {
+        return models;
+    }
+
+    public void setModels(List<AddModelDto> models) {
+        this.models = models;
+    }
 
     public AddModelDto getModel() {
         return model;

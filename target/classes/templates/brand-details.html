@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
-<div th:replace="fragments/navbar">Navbar</div>
+<div th:replace="fragments/navbar" class="text-center">Навигационное меню</div>
 <main class="flex-shrink-0">
   <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+    <div class="row justify-content-center">
+      <main class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
         <div class="justify-content-center">
-          <h1>Brand Details</h1>
+          <h1>Детали бренда</h1>
         </div>
-        <div class="row bg-light rounded">
-          <div class="col-md-6"><img src="/pic/VAZ.png" height="350px"></div>
-          <div class="col-md-6 pt-3">
-            <h2>Brand</h2>
-            <h4 th:text="'Name: ' + ${brandDetails.name}"></h4>
-            <h4 th:text="'Created: ' + ${brandDetails.created}"></h4>
+        <div class="row bg-light rounded" style="max-width: 600px;">
+          <div class="col-md-6 pt-3 text-center">
+            <h2>Бренд</h2>
+            <h4 th:text="'Название: ' + ${brandDetails.name}"></h4>
+            <h4 th:text="'Создан: ' + ${brandDetails.created}"></h4>
             <div th:if="${brandDetails.modified != null}">
-              <h4 th:text="'Modified: ' + ${brandDetails.modified}"></h4>
+              <h4 th:text="'Изменен: ' + ${brandDetails.modified}"></h4>
             </div>
-            <div class="align-bottom">
-              <a class="btn btn-danger align-bottom" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
+            <div class="text-right">
+              <div class="align-bottom">
+                <a class="btn btn-danger align-bottom" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Удалить бренд</a>
+              </div>
+              <div style="padding-top: 20px"></div>
+              <div class="align-bottom">
+                <a class="btn btn-warning align-bottom" th:href="@{/brands/brand-edit/{brand-name}(brand-name=${brandDetails.name})}">Редактировать бренд</a>
+              </div>
             </div>
-            <div style="padding-top: 20px"></div>
-            <div class="align-bottom">
-              <a class="btn btn-warning align-bottom" th:href="@{/brands/brand-edit/{brand-name}(brand-name=${brandDetails.name})}">Edit brand</a>
-            </div>
-<!--            <div class="d-flex flex-content bg-text mb-3">-->
-<!--              <h2 th:text="'Модель: '"></h2>-->
-<!--              <h4><a class="btn-block" th:href="@{/models/model-details/{id}(id = ${brandDetails.model.name})}" th:text="${brandDetails.model.name}"></a></h4>-->
-<!--            </div>-->
-
           </div>
         </div>
+        <!-- Вывод моделей бренда с изображениями и обводкой -->
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h3>Модели бренда</h3>
+            <div th:each="model : ${brandDetails.models}" class="model-container mb-3 p-3 border">
+              <div class="d-flex justify-content-between align-items-center">
+                <a th:href="@{/models/model-details/{id}(id=${model.name})}" th:text="${model.name}" class="h4"></a>
+                <img th:if="${model.imageURL}" th:src="${model.imageURL}" alt="Model Image" class="img-fluid ml-3" style="max-width: 200px; max-height: 150px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </main>
     </div>
   </div>
 </main>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="fragments/footer" class="text-center">Подвал</footer>
 </body>
 </html>
