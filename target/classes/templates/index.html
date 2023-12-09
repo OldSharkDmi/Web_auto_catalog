@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center mt-5">
+                <div class="mb-4">
+                    <img src="/pic/logo.png" alt="Company Logo" class="img-fluid" style="max-width: 200px;">
+                </div>
+                <div class="mb-4">
+                    <h1 class="display-4">Добро пожаловать!</h1>
+                </div>
+                <div class="text-muted">
+                    <p class="lead">
+                        Нажмите <a href="http://localhost:8080/error404">"Войти"</a></h2> или <a href="http://localhost:8080/users/add">"Зарегистрироваться"</a></h2>.
+                    </p>
+                </div>
+                <div class="text-muted">
+                    <p class="lead">
+                        Последнее обновление базы данных: <span th:text="${#dates.createNow()}"></span>
+                    </p>
+                </div>
+
+                <style>
+                    .square-container {
+                        width: 250px; /* ширина */
+                        height: 250px; /* высота */
+                        max-width: 100%; /* Чтобы контейнер был адаптивным */
+                        text-align: center; /* Выравнивание текста по центру */
+                        padding: 20px; /*  внутр отступ для контейнера */
+                    }
+
+                    .square-container img {
+                        max-width: 100%; /* Чтобы изображение  было адаптивным */
+                        max-height: 100%; /* Чтобы пикча внутри контейнера было адаптивным */
+                        margin-bottom: 10px; /*  отступ между текстом и изображением */
+                    }
+                </style>
+
+                <!-- Вывод топ 3 самых дешевых заказов -->
+                <div th:if="${topOffers != null and not #lists.isEmpty(topOffers)}">
+                    <h2 class="mt-4">Топ 3 самых дешевых заказов</h2>
+                    <ul th:each="offer : ${topOffers}">
+                        <div class="border rounded p-3 mb-3 square-container mx-auto text-center"> <!-- mx-auto и text-center для центрирования -->
+                            <h4 style="font-family: 'Roboto', sans-serif;"> 
+                                <a class="btn-block" th:href="@{/offers/offer-details/{id}(id = ${offer.id})}">
+                                    <span class="font-weight-bold" th:text="${offer.model.name}"></span> -
+                                    <span class="font-italic" th:text="${offer.price}"></span>&#8381;
+                                </a>
+                            </h4>
+                            <a th:if="${offer.imageUrl}" th:href="@{/offers/offer-details/{id}(id=${offer.id})}">
+                                <img th:if="${offer.imageUrl}" th:src="${offer.imageUrl}" alt="Kartinka" class="img-fluid float-md-right">
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

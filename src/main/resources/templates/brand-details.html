@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1>Brand Details</h1>
+        </div>
+        <div class="row bg-light rounded">
+          <div class="col-md-6"><img src="/pic/VAZ.png" height="350px"></div>
+          <div class="col-md-6 pt-3">
+            <h2>Brand</h2>
+            <h4 th:text="'Name: ' + ${brandDetails.name}"></h4>
+            <h4 th:text="'Created: ' + ${brandDetails.created}"></h4>
+            <div th:if="${brandDetails.modified != null}">
+              <h4 th:text="'Modified: ' + ${brandDetails.modified}"></h4>
+            </div>
+            <div class="align-bottom">
+              <a class="btn btn-danger align-bottom" th:href="@{/brands/brand-delete/{brand-name}(brand-name=${brandDetails.name})}">Delete brand</a>
+            </div>
+            <div style="padding-top: 20px"></div>
+            <div class="align-bottom">
+              <a class="btn btn-warning align-bottom" th:href="@{/brands/brand-edit/{brand-name}(brand-name=${brandDetails.name})}">Edit brand</a>
+            </div>
+<!--            <div class="d-flex flex-content bg-text mb-3">-->
+<!--              <h2 th:text="'Модель: '"></h2>-->
+<!--              <h4><a class="btn-block" th:href="@{/models/model-details/{id}(id = ${brandDetails.model.name})}" th:text="${brandDetails.model.name}"></a></h4>-->
+<!--            </div>-->
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

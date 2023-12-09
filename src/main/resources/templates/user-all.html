@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <h2 class="display-4 text-center text-dark mt-5">Все пользователи</h2>
+                <div th:each="u : ${userInfos}" class="d-flex flex-column bg-text mb-3">
+                    <h2 th:text="'Роль: ' + ${u.role}"></h2>
+                    <h2 th:text="'Имя пользователя: ' + ${u.userName}"></h2>
+                    <h2 th:text="'Создан: ' + ${u.created}"></h2>
+                    <h4><a class="btn btn-block btn-secondary" th:href="@{/users/user-details/{user-name}(user-name=${u.userName})}">Подробная информация</a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

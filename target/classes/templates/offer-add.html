@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<div class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1 class="display-4">Добавление Заказа</h1>
+        </div>
+        <form th:action="@{/offers/create}" th:method="post" th:object="${offerModel}" class="m-md-auto w-50 pb-3">
+          <div class="mb-3">
+            <label class="form-label" for="model"><h5>Доступные модели</h5></label>
+            <select multiple="false" class="form-control text-center" id="model" name="name" th:field="*{model}">
+              <option th:each="m : ${availableModels}" th:value="${m.name}" th:text="${m.name}">Имя модели</option>
+            </select>
+            <small th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="text-danger">Ошибка</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="users"><h5>Доступные пользователи</h5></label>
+            <select multiple="false" class="form-control text-center" id="users" name="name" th:field="*{users}">
+              <option th:each="u : ${availableUsers}" th:value="${u.userName}" th:text="${u.userName}">Имя пользователя</option>
+            </select>
+            <small th:if="${#fields.hasErrors('users')}" th:errors="*{users}" class="text-danger">Ошибка</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="description">Описание</label>
+            <input th:field="*{description}" th:errorclass="is-invalid" type="text" class="form-control text-center" id="description" aria-describedby="description" name="description"/>
+            <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Ошибка</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="seller">Продавец</label>
+            <input th:field="*{seller}" th:errorclass="is-invalid" type="text" class="form-control text-center" id="seller" aria-describedby="seller" name="seller"/>
+            <small th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}" class="text-danger">Ошибка</small>
+          </div>
+
+          <fieldset class="mb-3">
+            <legend>Выберите Тип Двигателя</legend>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}" th:value="GASOLINE" th:errorclass="is-invalid" type="radio" class="form-check-input" name="engineEnum"/>
+                <span>Бензин</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}" th:value="DIESEL" th:errorclass="is-invalid" type="radio" class="form-check-input" name="engineEnum"/>
+                <span>Дизель</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}" th:value="ELECTRIC" th:errorclass="is-invalid" type="radio" class="form-check-input " name="engineEnum"/>
+                <span>Электричество</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{engineEnum}" th:value="HYBRID" th:errorclass="is-invalid" type="radio" class="form-check-input " name="engineEnum"/>
+                <span>Гибрид</span>
+              </label>
+            </div>
+            <small th:if="${#fields.hasErrors('engineEnum')}" th:errors="*{engineEnum}" class="text-danger">Ошибка</small>
+          </fieldset>
+          <div class="mb-3">
+            <label class="form-label" for="imageURL">URL изображения</label>
+            <input th:field="*{imageURL}" th:errorclass="is-invalid" type="text" class="form-control text-center" id="imageURL" aria-describedby="imageURL" name="imageURL"/>
+            <small th:if="${#fields.hasErrors('imageURL')}" th:errors="*{imageURL}" class="text-danger">Ошибка</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="mileage">Пробег</label>
+            <input th:field="*{mileage}" th:errorclass="is-invalid" type="text" class="form-control text-center" id="mileage" aria-describedby="mileage" name="mileage"/>
+            <small th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="text-danger">Ошибка</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="price">Цена</label>
+            <input th:field="*{price}" th:errorclass="is-invalid" type="text" class="form-control text-center" id="price" aria-describedby="price" name="price"/>
+            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger">Ошибка</small>
+          </div>
+          <fieldset class="mb-3">
+            <legend>Выберите Тип Трансмиссии</legend>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input th:field="*{transmissionEnum}" th:value="MANUAL" th:errorclass="is-invalid" type="radio" class="form-check-input" name="transmissionEnum"/>
+                <span>Механическая</span>
+              </label>
+            </div>
+            <div class="form-check disabled">
+              <label class="form-check-label">
+                <input th:field="*{transmissionEnum}" th:value="AUTOMATIC" th:errorclass="is-invalid" type="radio" class="form-check-input" name="transmissionEnum"/>
+                <span>Автоматическая</span>
+              </label>
+            </div>
+            <small th:if="${#fields.hasErrors('transmissionEnum')}" th:errors="*{transmissionEnum}" class="text-danger">Ошибка</small>
+          </fieldset>
+          <div class="mb-3">
+            <label class="form-label" for="year">Год модели</label>
+            <input th:field="*{year}" th:errorclass="is-invalid" type="text" class="form-control text-center" id="year" aria-describedby="year" name="year"/>
+            <small th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="text-danger">Ошибка</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="created">Дата создания</label>
+            <input th:field="*{created}" th:errorclass="is-invalid" type="date" class="form-control text-center" id="created" name="created"
+                   th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"/>
+            <small th:if="${#fields.hasErrors('created')}" th:errors="*{created}" class="text-danger">Ошибка</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Добавить Предложение</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>
