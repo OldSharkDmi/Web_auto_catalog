@@ -3,6 +3,8 @@ package ru.rutmiit.models.BaseEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Optional;
+
 @MappedSuperclass
 public abstract class BaseEntityUUID {
 
@@ -18,4 +20,5 @@ public abstract class BaseEntityUUID {
     protected void setId(String id) {
         this.id = id;
     }
+
 }

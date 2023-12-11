@@ -5,6 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.rutmiit.dto.UserRegistrationDto;
 
+import ru.rutmiit.models.Enum.RoleEnum;
+import ru.rutmiit.models.User;
 import ru.rutmiit.repositories.UserRepository;
 import ru.rutmiit.repositories.UserRoleRepository;
 
@@ -20,7 +22,7 @@ public class AuthService {
 
 
     private PasswordEncoder passwordEncoder;
-    /*
+
 
     public AuthService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -40,25 +42,38 @@ public class AuthService {
         }
 
         var userRole = userRoleRepository.
-                findRoleByName(UserRoles.USER).orElseThrow();
+                findByRoleEnum(RoleEnum.User).orElseThrow();
 
         User user = new User(
                 registrationDTO.getUsername(),
                 passwordEncoder.encode(registrationDTO.getPassword()),
                 registrationDTO.getEmail(),
-                registrationDTO.getFullname(),
-                registrationDTO.getAge()
+                registrationDTO.getFirstName(),
+                registrationDTO.getLastName()
         );
 
-        user.setRoles(List.of(userRole));
+        user.setRole(userRole);
 
         this.userRepository.save(user);
     }
 
     public User getUser(String username) {
-        return userRepository.findByUsername(username)
+        return userRepository.findByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
     }
+    public void createAdminUser() {
+        User adminUser = new User(
+                "Admin",
+                passwordEncoder.encode("Admin"),
+                "admin@example.com",
+                "Admin",
+                "Admin"
+        );
 
-     */
+        var adminRole = userRoleRepository.findByRoleEnum(RoleEnum.Admin).orElseThrow();
+        adminUser.setRole(adminRole);
+
+        this.userRepository.save(adminUser);
+    }
+
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Панель навигации</div>
@@ -22,8 +22,12 @@
                                 <h2 th:text="'Год: ' + ${offerDetails.year}"></h2>
                                 <h2 th:text="'Продавец: ' + ${offerDetails.seller}"></h2>
                                 <h2 th:text="'Создано: ' + ${offerDetails.created}"></h2>
+                                <li class="btn btn-danger align-bottom" sec:authorize="hasRole('Admin')">
+
                                 <h4><a class="btn btn-danger align-bottom"
+
                                        th:href="@{/offers/offer-delete/{offer-name}(offer-name=${offerDetails.id})}">Удалить предложение</a></h4>
+                                </li>
                             </div>
                         </div>
                         <div class="col-md-4">

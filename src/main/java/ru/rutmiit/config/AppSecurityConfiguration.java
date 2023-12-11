@@ -1,4 +1,23 @@
 package ru.rutmiit.config;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.web.SecurityFilterChain;
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +26,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
@@ -16,29 +34,43 @@ import org.springframework.security.web.context.RequestAttributeSecurityContextR
 import org.springframework.security.web.context.SecurityContextRepository;
 import ru.rutmiit.models.Enum.RoleEnum;
 import ru.rutmiit.repositories.UserRepository;
+import ru.rutmiit.services.AppUserDetailsService;
 
-/*
+
 @Configuration
 public class AppSecurityConfiguration {
+
     private UserRepository userRepository;
 
+    @Autowired
     public AppSecurityConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    /*
+    //я это взял из интернета, это нужно чтобы работало  HttpSecurity http
+
+    @Configuration(proxyBeanMethods = false)
+    @ConditionalOnMissingBean(name = BeanIds.SPRING_SECURITY_FILTER_CHAIN)
+    @ConditionalOnClass(EnableWebSecurity.class)
+    @EnableWebSecurity
+    static class WebSecurityEnablerConfiguration {
+
+    }
+
+
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception {
+    public SecurityFilterChain securityFilterChain( HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception {
         http
                 .authorizeHttpRequests(
                         authorizeHttpRequests ->
                                 authorizeHttpRequests.
                                         requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                                         .permitAll().
-                                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error")
+                                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/offers/all")
                                         .permitAll().
                                         requestMatchers("/users/profile").authenticated().
-                                        requestMatchers("/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.MODERATOR.name()).
-                                        requestMatchers("/companies/add","/companies/company-delete/","/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.ADMIN.name()).
+                                        requestMatchers("/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.User.name()).
+                                        requestMatchers("/companies/add","/companies/company-delete/","/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.Admin.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(
@@ -47,8 +79,8 @@ public class AppSecurityConfiguration {
                                         loginPage("/users/login").
                                         usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                                         passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
-                                        defaultSuccessUrl("/").
-                                        failureForwardUrl("/users/login-error")
+                                        defaultSuccessUrl("/brands/brand/all").
+                                        failureForwardUrl("/users/404")
                 )
                 .logout((logout) ->
                         logout.logoutUrl("/users/logout").
@@ -79,5 +111,7 @@ public class AppSecurityConfiguration {
     public UserDetailsService userDetailsService() { return new AppUserDetailsService(userRepository); }
 
 
+
+
 }
-  */
+

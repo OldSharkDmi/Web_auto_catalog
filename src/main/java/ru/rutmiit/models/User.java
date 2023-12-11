@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import ru.rutmiit.models.BaseEntity.BaseEntity;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +29,18 @@ public class User  extends BaseEntity {
     public User() {
         offer = new HashSet<>();
     }
+
+    public User(String userName, String password, String email, String firstName, String lastName)
+    {
+        this();
+
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @PrePersist
     protected void onCreate() {
         created = LocalDate.now();
@@ -73,7 +86,7 @@ public class User  extends BaseEntity {
         this.role = role;
     }
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "username", nullable = false)
     public String getUserName() {
         return userName;
     }
@@ -118,7 +131,7 @@ public class User  extends BaseEntity {
         isActive = active;
     }
 
-    @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "image_url",  columnDefinition = "TEXT")
     public String getImageUrl() {
         return imageUrl;
     }
@@ -139,5 +152,7 @@ public class User  extends BaseEntity {
     public String toString() {
         return  userName;
     }
+
+
 
 }

@@ -13,14 +13,15 @@ public class UserRegistrationDto {
     @Size(min = 5, max = 20)
     private String username;
 
-    private String fullname;
+
 
     @UniqueEmail
     @NotEmpty(message = "Email не может быть пустым!")
     @Email
     private String email;
 
-    private int age;
+    private String firstName;
+    private String lastName;
     private String password;
     private String confirmPassword;
 
@@ -35,15 +36,7 @@ public class UserRegistrationDto {
     public void setUsername(String username) {
         this.username = username;
     }
-    @NotEmpty(message = "Full name cannot be null or empty!")
-    @Size(min = 5, max = 20)
-    public String getFullname() {
-        return fullname;
-    }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
     @NotEmpty(message = "Email cannot be null or empty!")
     @Email
     public String getEmail() {
@@ -53,15 +46,7 @@ public class UserRegistrationDto {
     public void setEmail(String email) {
         this.email = email;
     }
-    @Min(0)
-    @Max(90)
-    public int getAge() {
-        return age;
-    }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
     @NotEmpty(message = "Password cannot be null or empty!")
     @Size(min = 5, max = 20)
     public String getPassword() {
@@ -81,13 +66,34 @@ public class UserRegistrationDto {
         this.confirmPassword = confirmPassword;
     }
 
+    @NotEmpty(message = "FirstName cannot be null or empty!")
+    @Size(min = 2, max = 20)
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @NotEmpty(message = "LastName cannot be null or empty!")
+    @Size(min = 2, max = 20)
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
         return "UserRegistrationDTO{" +
                 "username='" + username + '\'' +
-                ", fullName='" + fullname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", age=" + age +
+
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
                 '}';
