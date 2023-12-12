@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"/>
 <body class="d-flex flex-column h-100">
 <div th:replace="fragments/navbar">Navbar</div>
@@ -23,14 +23,18 @@
             <div th:if="${modelDetails.modified != null}">
               <h4 th:text="'Изменено: ' + ${modelDetails.modified}"></h4>
             </div>
+            <li class="btn btn-danger align-bottom" sec:authorize="hasRole('Admin')">
             <div class="align-bottom">
               <a class="btn btn-danger align-bottom"
                  th:href="@{/models/model-delete/{model-name}(model-name=${modelDetails.name})}">Удалить модель</a>
             </div>
+            </li>
             <div style="padding-top: 20px"></div>
+            <li class="btn btn-danger align-bottom" sec:authorize="hasRole('Admin')">
             <div class="align-bottom">
               <a class="btn btn-warning align-bottom" th:href="@{/models/model-edit/{model-name}(model-name=${modelDetails.name})}">Редактировать модель</a>
             </div>
+            </li>
           </div>
           <div class="col-md-6">
             <img th:if="${modelDetails.imageURL}" th:src="${modelDetails.imageURL}" alt="Изображение модели" class="img-fluid ml-3" style="max-width: 600px; max-height: 400px;">

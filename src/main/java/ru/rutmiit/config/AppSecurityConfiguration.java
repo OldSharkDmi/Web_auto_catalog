@@ -46,8 +46,7 @@ public class AppSecurityConfiguration {
     public AppSecurityConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    //я это взял из интернета, это нужно чтобы работало  HttpSecurity http
-
+/*
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnMissingBean(name = BeanIds.SPRING_SECURITY_FILTER_CHAIN)
     @ConditionalOnClass(EnableWebSecurity.class)
@@ -55,6 +54,8 @@ public class AppSecurityConfiguration {
     static class WebSecurityEnablerConfiguration {
 
     }
+
+ */
 
 
 
@@ -71,6 +72,8 @@ public class AppSecurityConfiguration {
                                         requestMatchers("/users/profile").authenticated().
                                         requestMatchers("/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.User.name()).
                                         requestMatchers("/companies/add","/companies/company-delete/","/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.Admin.name()).
+                                        requestMatchers("/users/add","/companies/company-delete/","/employees/add", "/employees/employee-delete/").hasRole(RoleEnum.Admin.name()).
+
                                         anyRequest().authenticated()
                 )
                 .formLogin(
@@ -79,7 +82,7 @@ public class AppSecurityConfiguration {
                                         loginPage("/users/login").
                                         usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                                         passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
-                                        defaultSuccessUrl("/brands/brand/all").
+                                        defaultSuccessUrl("/",true).
                                         failureForwardUrl("/users/404")
                 )
                 .logout((logout) ->
@@ -111,7 +114,29 @@ public class AppSecurityConfiguration {
     public UserDetailsService userDetailsService() { return new AppUserDetailsService(userRepository); }
 
 
+/*
+http
+    .formLogin(
+        (formLogin) ->
+            formLogin
+                .loginPage("/users/login")
+                .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
+                .defaultSuccessUrl("/", true)
+                .failureForwardUrl("/users/login-error")
+    )
+    .logout((logout) ->
+        logout
+            .logoutUrl("/users/logout")
+            .logoutSuccessUrl("/")
+            .invalidateHttpSession(true)
+    )
+    .securityContext(
+        securityContext -> securityContext
+            .securityContextRepository(securityContextRepository)
+    );
 
+ */
 
 }
 

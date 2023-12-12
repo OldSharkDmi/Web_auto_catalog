@@ -2,6 +2,9 @@ package ru.rutmiit.services;
 
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.rutmiit.dto.AddBrandDto;
@@ -50,7 +53,6 @@ public class BrandService {
     public ShowDetailedBrandInfoDto brandDetails(String brandName) {
         return modelMapper.map(brandRepository.findByName(brandName).orElse(null), ShowDetailedBrandInfoDto.class);
     }
-
 
     public void removeBrand(String brandName) {
         brandRepository.deleteByName(brandName);
