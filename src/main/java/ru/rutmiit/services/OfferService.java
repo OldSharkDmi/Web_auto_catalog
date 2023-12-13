@@ -2,6 +2,9 @@ package ru.rutmiit.services;
 
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.rutmiit.dto.AddOfferDto;
@@ -19,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class OfferService {
 
     private final ModelMapper modelMapper;
@@ -34,14 +38,14 @@ public class OfferService {
         this.userRepository = userRepository;
     }
 
-
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void register(AddOfferDto offer) {
         Offer of = modelMapper.map(offer, Offer.class);
         of.setModel(modelRepository.findByName(offer.getModel()).orElse(null));
         of.setUsers(userRepository.findByUserName(offer.getUsers()).orElse(null));
         offerRepository.saveAndFlush(of);
     }
-
+    //@Cacheable("offers")
     public List<ShowOfferInfoDto> getAll() {
         return offerRepository.findAll().stream().map((offer) -> modelMapper.map(offer, ShowOfferInfoDto.class)).collect(Collectors.toList());
     }
@@ -54,7 +58,7 @@ public class OfferService {
     public ShowDetailedOfferInfoDto offerDetails(String id) {
         return modelMapper.map(offerRepository.findById(id).orElse(null), ShowDetailedOfferInfoDto.class);
     }
-
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void removeOffer(String id) {
         offerRepository.deleteById(id);
     }

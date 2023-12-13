@@ -2,6 +2,8 @@ package ru.rutmiit.services;
 
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.rutmiit.dto.AddBrandDto;
@@ -33,6 +35,7 @@ public class ModelService {
         this.brandRepository = brandRepository;
     }
 
+    @CacheEvict(cacheNames = "models", allEntries = true)
 
     public void addModel(AddModelDto addModelDto) {
         Model model = modelMapper.map(addModelDto, Model.class);
@@ -40,7 +43,7 @@ public class ModelService {
         model.setBrand(brandRepository.findByName(addModelDto.getBrand()).orElse(null));
         modelRepository.saveAndFlush(model);
     }
-
+    @Cacheable("models")
     public List<ShowModelInfoDto> getAllModels() {
         return modelRepository.findAll().stream().map(model -> modelMapper.map(model, ShowModelInfoDto.class))
                 .collect(Collectors.toList());
@@ -51,10 +54,11 @@ public class ModelService {
                 .map(model -> modelMapper.map(model, AddModelDto.class))
                 .orElse(null);
     }
-
+   // @Cacheable("models")
     public ShowDetailedModelInfoDto modelDetails(String modelName) {
         return modelMapper.map(modelRepository.findByName(modelName), ShowDetailedModelInfoDto.class);
     }
+    @CacheEvict(cacheNames = "models", allEntries = true)
 
     public void removeModel(String modelName) {
         modelRepository.deleteByName(modelName);
@@ -76,6 +80,7 @@ public class ModelService {
                 .map(model -> modelMapper.map(model, AddModelDto.class))
                 .collect(Collectors.toList());
     }
+    @CacheEvict(cacheNames = "models", allEntries = true)
 
     public void editModel(String originalModelName, AddModelDto modelDto) {
         Optional<Model> existingModelOptional = modelRepository.findByName(originalModelName);

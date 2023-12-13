@@ -46,15 +46,14 @@ public class AppSecurityConfiguration {
     public AppSecurityConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 /*
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnMissingBean(name = BeanIds.SPRING_SECURITY_FILTER_CHAIN)
     @ConditionalOnClass(EnableWebSecurity.class)
     @EnableWebSecurity
     static class WebSecurityEnablerConfiguration {
-
     }
-
  */
 
 

@@ -19,7 +19,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 @Service
+@EnableCaching
 public class BrandService {
 
     private final  ModelMapper modelMapper;
@@ -30,18 +32,19 @@ public class BrandService {
         this.brandRepository = brandRepository;
     }
 
-
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public void addBrand(AddBrandDto brand) {
         Brand brandEntity = modelMapper.map(brand, Brand.class);
         brandEntity.setCreated(LocalDate.now());
         brandRepository.saveAndFlush(brandEntity);
     }
 
+    @Cacheable("brands")
 
     public List<ShowBrandInfoDto> getAll() {
         return brandRepository.findAll().stream().map((brand) -> modelMapper.map(brand, ShowBrandInfoDto.class)).collect(Collectors.toList());
     }
-
+    @Cacheable("brands")
     public AddBrandDto findBrandByName(String brandName) {
         return brandRepository.findByName(brandName)
                 .map(brand -> modelMapper.map(brand, AddBrandDto.class))
@@ -49,10 +52,12 @@ public class BrandService {
     }
 
 
-
-    public ShowDetailedBrandInfoDto brandDetails(String brandName) {
+   // @Cacheable(cacheNames = "brands", key = "#brandName")
+    public ShowDetailedBrandInfoDto brandDetails(String brandName)
+    {
         return modelMapper.map(brandRepository.findByName(brandName).orElse(null), ShowDetailedBrandInfoDto.class);
     }
+    @CacheEvict(cacheNames = "brands", allEntries = true)
 
     public void removeBrand(String brandName) {
         brandRepository.deleteByName(brandName);
@@ -64,7 +69,7 @@ public class BrandService {
 ////        b.setModified(new LocalDate());
 //        return modelMapper.map(brandRepository.saveAndFlush(b), AddBrandDto.class);
 //    }
-
+@CacheEvict(cacheNames = "brands", allEntries = true)
     public void editBrand(String originalBrandName, AddBrandDto brandDto) {
         Optional<Brand> existingBrandOptional = brandRepository.findByName(originalBrandName);
 
