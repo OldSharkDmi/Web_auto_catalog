@@ -1,6 +1,9 @@
 package ru.rutmiit.web;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +21,7 @@ public class ModelController {
 
     @Autowired
     private final ModelService modelService;
-
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     @Autowired
     private final BrandService brandService;
     public ModelController(ModelService modelService, BrandService brandService) {
@@ -51,7 +54,7 @@ public class ModelController {
     @GetMapping("/model/all")
     public String showAllModels(Model model) {
         model.addAttribute("modelInfos", modelService.getAllModels());
-        model.addAttribute("brands", brandService.getAll()); // Add this line
+        model.addAttribute("brands", brandService.getAll());
 
         return "model-all";
     }
@@ -60,7 +63,7 @@ public class ModelController {
     @GetMapping("/model-details/{model-name}")
     public String modelDetails(@PathVariable("model-name") String modelName, Model model) {
         model.addAttribute("modelDetails", modelService.modelDetails(modelName));
-
+        LOG.log(Level.INFO, "Show model detail info: "+modelName);
         return "model-details";
     }
 

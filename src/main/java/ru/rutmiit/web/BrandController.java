@@ -1,6 +1,9 @@
 package ru.rutmiit.web;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,7 @@ public class BrandController {
     public BrandController(BrandService brandService) {
         this.brandService = brandService;
     }
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     @GetMapping("/add")
     public String addBrand() {return "brand-add";}
@@ -51,7 +55,7 @@ public class BrandController {
     @GetMapping("/brand-details/{brand-name}")
     public String brandDetails(@PathVariable("brand-name") String brandName, Model model) {
         model.addAttribute("brandDetails", brandService.brandDetails(brandName));
-
+        LOG.log(Level.INFO, "Show offer detail info: "+ brandName);
         return "brand-details";
     }
 

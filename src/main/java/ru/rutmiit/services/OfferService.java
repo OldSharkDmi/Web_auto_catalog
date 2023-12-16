@@ -64,7 +64,6 @@ public class OfferService {
     }
 
     public List<Offer> getTop3CheapestOffers() {
-        // Здесь вызывайте метод репозитория для получения топ 3 заказов
         return offerRepository.findTop3ByOrderByPrice();
     }
 
