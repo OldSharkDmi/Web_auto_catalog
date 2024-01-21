@@ -7,18 +7,19 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import ru.rutmiit.dto.AddModelDto;
 import ru.rutmiit.dto.AddOfferDto;
 import ru.rutmiit.dto.ShowDetailedOfferInfoDto;
 import ru.rutmiit.dto.ShowOfferInfoDto;
+import ru.rutmiit.models.Brand;
+import ru.rutmiit.models.Model;
 import ru.rutmiit.models.Offer;
 import ru.rutmiit.repositories.ModelRepository;
 import ru.rutmiit.repositories.OfferRepository;
 import ru.rutmiit.repositories.UserRepository;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -91,6 +92,9 @@ public class OfferService {
                 .map(offer -> modelMapper.map(offer, ShowOfferInfoDto.class))
                 .collect(Collectors.toList());
     }
+
+
+
 
 //    public AddOfferDto update(AddOfferDto offer) {
 //        Optional<Offer> existingOffer = offerRepository.findById(offer.getId());

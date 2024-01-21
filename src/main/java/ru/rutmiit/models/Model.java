@@ -23,7 +23,6 @@ public class Model extends BaseEntity {
         offers = new HashSet<>();
     }
 
-
     @ManyToOne
     public Brand getBrand() {
         return brand;

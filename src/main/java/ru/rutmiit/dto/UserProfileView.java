@@ -1,13 +1,13 @@
-package ru.rutmiit.web;
+package ru.rutmiit.dto;
 
-public class UserProfileView {
+import java.util.List;
+
+public  class UserProfileView {
     private String username;
-
     private String email;
-
     private String firstName;
     private String lastName;
-
+    private List<AddOfferDto> offers;
     public UserProfileView() {
     }
 
@@ -16,6 +16,14 @@ public class UserProfileView {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public List<AddOfferDto> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<AddOfferDto> offers) {
+        this.offers = offers;
     }
 
     public String getUsername() {

@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.rutmiit.dto.AddModelDto;
 import ru.rutmiit.dto.AddOfferDto;
 import ru.rutmiit.dto.ShowOfferInfoDto;
+import ru.rutmiit.models.Offer;
 import ru.rutmiit.services.ModelService;
 import ru.rutmiit.services.OfferService;
 import ru.rutmiit.services.UserService;
@@ -102,7 +104,18 @@ public class OfferController {
         model.addAttribute("offerInfos", offerInfos);
         return "offer-all";
     }
+    @PostMapping("/offer-edit/{offer-name}")
+    public String editOffer(@PathVariable("offer-name") String offerName, @Valid AddOfferDto offerDto, BindingResult result, Model model) {
 
+        model.addAttribute("availableBrands", offerService.getAll());
+        if (result.hasErrors()) {
+            model.addAttribute("offer", offerDto);
+            return "offer-edit";
+        }
+
+       // offerService.editOffer(offerName, offerDto);
+        return "redirect:/";
+    }
 
 
 }

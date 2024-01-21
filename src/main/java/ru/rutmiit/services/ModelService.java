@@ -54,7 +54,6 @@ public class ModelService {
                 .map(model -> modelMapper.map(model, AddModelDto.class))
                 .orElse(null);
     }
-   // @Cacheable("models")
     public ShowDetailedModelInfoDto modelDetails(String modelName) {
         return modelMapper.map(modelRepository.findByName(modelName), ShowDetailedModelInfoDto.class);
     }

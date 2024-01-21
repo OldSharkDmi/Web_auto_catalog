@@ -1,14 +1,11 @@
 package ru.rutmiit.dto;
 
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.validator.constraints.Length;
 import ru.rutmiit.models.Enum.RoleEnum;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class AddUserDto {
     private RoleEnum role;
@@ -84,4 +81,6 @@ public class AddUserDto {
     public String toString() {
         return userName;
     }
+
+
 }

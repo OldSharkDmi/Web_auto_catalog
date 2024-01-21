@@ -18,13 +18,24 @@
             <h4 th:text="'First Name: ' + *{firstName}"></h4>
             <h4 th:text="'email: ' + *{email}"></h4>
             <h4 th:text="'Username: ' + *{username}"></h4>
-            <b>User Roles: </b>
+            <h4>User Roles:</h4>
             <div sec:authentication="principal.authorities"></div>
           </div>
+
           <div class="col-md-6"><img src="/pic/employee.png" height="350px"></div>
         </div>
+
+
+
       </main>
     </div>
+    <h4>Offers:</h4>
+    <ul>
+      <li th:each="offers : ${user.offers}">
+        <p th:text="'Model: ' + ${user.offers.model}"></p>
+        <p th:text="'Description: ' + ${user.offers.description}"></p>
+      </li>
+    </ul>
   </div>
 </main>
 <footer th:replace="fragments/footer"/>

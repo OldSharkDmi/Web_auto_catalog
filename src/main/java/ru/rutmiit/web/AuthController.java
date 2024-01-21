@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.rutmiit.dto.AddUserDto;
+import ru.rutmiit.dto.UserProfileView;
 import ru.rutmiit.dto.UserRegistrationDto;
 import ru.rutmiit.models.User;
 import ru.rutmiit.services.AuthService;
@@ -75,7 +77,6 @@ public class AuthController {
     public String profile(Principal principal, Model model) {
         String username = principal.getName();
         User user = authService.getUser(username);
-
         UserProfileView userProfileView = new UserProfileView(
                 username,
                 user.getEmail(),
